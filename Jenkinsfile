@@ -1,9 +1,11 @@
 pipeline {
     agent any
+
     stages {
-        stage('Build') { 
+        stage('Verify Node and npm') {
             steps {
-                sh 'npm install' 
+                sh 'node -v'
+                sh 'npm -v'
             }
         }
     }
