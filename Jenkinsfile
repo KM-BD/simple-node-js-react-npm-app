@@ -1,9 +1,19 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'node:14'
+        }
+    }
     stages {
-        stage('Build') { 
+        stage('Checkout') {
             steps {
-                sh 'npm install' 
+                checkout scm
+            }
+        }
+        stage('Build') {
+            steps {
+                sh 'npm install'
+                sh 'npm run build'
             }
         }
     }
