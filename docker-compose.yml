@@ -1,11 +1,19 @@
 version: '3.8'
 
 services:
-  app:
-    image: node:14
-    working_dir: /usr/src/app
+  jenkins:
+    image: jenkins/jenkins:lts
+    container_name: jenkins
+    user: root
+    environment:
+      - DOCKER_HOST=tcp://host.docker.internal:2375
     volumes:
-      - .:/usr/src/app
+      - jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
     ports:
-      - "3000:3000"
-    command: bash -c "npm install && npm start"
+      - "8080:8080"
+      - "50000:50000"
+    restart: always
+
+volumes:
+  jenkins_home:
