@@ -1,21 +1,26 @@
-version: '3.8'
+version: '3'
 
 services:
   jenkins:
     image: jenkins/jenkins:lts
-    container_name: jenkins
-    user: root
-    environment:
-      - JENKINS_USER=admin
-      - JENKINS_PASS=admin
-      - DOCKER_HOST=tcp://host.docker.internal:2375
-    volumes:
-      - jenkins_home:/var/jenkins_home
-      - /var/run/docker.sock:/var/run/docker.sock
     ports:
       - "8081:8080"
-      - "50000:50000"
-    restart: always
+    volumes:
+      - jenkins_home:/var/jenkins_home
+    environment:
+      JENKINS_OPTS: "--prefix=/jenkins"
+
+  node-app:
+    image: node:14
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - jenkins
+    environment:
+      - NODE_ENV=production
 
 volumes:
   jenkins_home:

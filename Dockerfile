@@ -1,8 +1,8 @@
-# Base image
+# Use the official Node.js image
 FROM node:14
 
-# Set working directory
-WORKDIR /app
+# Create and change to the app directory
+WORKDIR /usr/src/app
 
 # Copy package.json and package-lock.json
 COPY package*.json ./
@@ -13,11 +13,11 @@ RUN npm install
 # Copy the rest of the application code
 COPY . .
 
-# Build the React app
+# Build the application
 RUN npm run build
 
-# Expose port 3000 (default for React apps)
+# Expose the port the app runs on
 EXPOSE 3000
 
-# Serve the React app using serve
-CMD ["npm", "run", "serve"]
+# Start the application
+CMD ["npm", "start"]
