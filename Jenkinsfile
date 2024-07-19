@@ -5,13 +5,13 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-              sh "/usr/bin/npm install"
+              sh "/c/Program Files/nodejs/npm install"
             }
         }
 
         stage('Build') {
             steps {
-                sh 'npm run build'
+                sh '/c/Program Files/nodejs/npm run build'
             }
         }
 
