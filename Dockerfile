@@ -1,23 +1,16 @@
-# Use the official Node.js image
-FROM node:14
+FROM jenkins/jenkins
 
-# Create and change to the app directory
-WORKDIR /usr/src/app
+# Install curl
+USER root
+RUN apt-get update && \
+    apt-get install -y curl
 
-# Copy package.json and package-lock.json
-COPY package*.json ./
+# Install Node.js
+RUN curl -sL https://deb.nodesource.com/setup_9.x | bash - && \
+    apt-get install -y nodejs
 
-# Install dependencies
-RUN npm install
+# Install npm
+RUN curl -L https://www.npmjs.com/install.sh | sh
 
-# Copy the rest of the application code
-COPY . .
-
-# Build the application
-RUN npm run build
-
-# Expose the port the app runs on
-EXPOSE 3000
-
-# Start the application
-CMD ["npm", "start"]
+# Switch back to jenkins user
+USER jenkins
