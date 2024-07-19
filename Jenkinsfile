@@ -1,18 +1,7 @@
 pipeline {
     agent any
 
-    environment {
-        NODEJS_HOME = tool name: 'NodeJS 14', type: 'NodeJSInstallation'
-        PATH = "${NODEJS_HOME}/bin:${env.PATH}"
-    }
-
-    stages {
-        stage('Checkout') {
-            steps {
-                // Clone the repository from your source control
-                git 'https://your-repo-url.git'
-            }
-        }
+    stages {        
 
         stage('Install Dependencies') {
             steps {
